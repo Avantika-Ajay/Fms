@@ -1,143 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HarvestHub</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-   <style>
-        
-nav {
-    background-color: #4CAF50;
-    overflow: hidden;
-}
-
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li {
-    float: left;
-}
-
-nav ul li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-nav ul li a:hover {
-    background-color: #45a049;
-}
-
-/* Rest of the styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f2f7f4; /* Beautiful background color */
-}
-
-.container {
-    max-width: 800px;
-    margin: 50px auto;
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 40px;
-    border-radius: 8px;
-}
-
-h1 {
-    color: #4CAF50;
-    font-size: 36px;
-    margin-bottom: 20px;
-}
-
-p {
-    color: #555;
-    font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 40px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #856318;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.btn:hover {
-    background-color: #45a049;
-}
-
-    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
     <style>
-     body {
+      nav {
+        background-color: #4caf50;
+        overflow: hidden;
+      }
+
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav ul li {
+        float: left;
+      }
+
+      nav ul li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      nav ul li a:hover {
+        background-color: #45a049;
+      }
+
+      /* Rest of the styles */
+      body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-image: url('images/farm.jpg');
-        background-color: #000000;
-    }
+        background-color: #f2f7f4; /* Beautiful background color */
+      }
 
-    .consists {
+      .container {
         max-width: 800px;
-        margin: 100px auto;
+        margin: 50px auto;
         text-align: center;
-    }
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 40px;
+        border-radius: 8px;
+      }
 
-    h1 {
-        color: #e1ebe2;
+      h1 {
+        color: #4caf50;
         font-size: 36px;
         margin-bottom: 20px;
-    }
+      }
 
-    p {
-        color: #f5efef;
+      p {
+        color: #555;
         font-size: 18px;
         line-height: 1.6;
         margin-bottom: 40px;
-    }
+      }
 
-    .btn {
+      .btn {
         display: inline-block;
         padding: 10px 20px;
-        background-color: #4CAF50;
+        background-color: #856318;
         color: white;
         text-decoration: none;
         border-radius: 4px;
         transition: background-color 0.3s;
-    }
+      }
 
-    .btn:hover {
+      .btn:hover {
         background-color: #45a049;
-    }
-</style>
-</head>
-<body>
+      }
+    </style>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url("images/farm.jpg");
+        background-color: #000000;
+      }
+
+      .consists {
+        max-width: 800px;
+        margin: 100px auto;
+        text-align: center;
+      }
+
+      h1 {
+        color: #e1ebe2;
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        color: #f5efef;
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 40px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      .btn:hover {
+        background-color: #45a049;
+      }
+    </style>
+    <script>
+      function extractUsernameFromJWT(authToken) {
+        // Check if authToken exists
+        if (authToken) {
+          // Split the JWT into its parts
+          const parts = authToken.split(".");
+
+          // Get the payload, which is the second part of the JWT
+          const payload = parts[1];
+
+          // Decode the payload from base64
+          const decodedPayload = atob(payload);
+
+          // Parse the decoded payload as JSON
+          const tokenData = JSON.parse(decodedPayload);
+
+          // Extract the username property from the tokenData
+          const username = tokenData.username;
+
+          return username;
+        } else {
+          return null;
+        }
+      }
+
+      function loadUsername() {
+        const authToken = document.cookie
+          ?.split("; ")
+          ?.find((x) => x.startsWith("x-auth-token"))
+          ?.split("=")[1];
+        if (!authToken) {
+          document.getElementById(
+            "name-login"
+          ).innerHTML = `<a href="login">Login</a>`;
+          return;
+        }
+        console.log(authToken);
+        const username = extractUsernameFromJWT(authToken);
+        console.log(username);
+        if (username) {
+          document.getElementById(
+            "name-login"
+          ).innerHTML = `<a>${username}</a>`;
+        } else {
+          document.getElementById(
+            "name-login"
+          ).innerHTML = `<a href="login">Login</a>`;
+        }
+      }
+
+      window.onload = loadUsername;
+    </script>
+  </head>
+  <body>
     <nav>
-        <ul>
-            <li><a href="login">Login</a></li>
-            <li><a href="farm">Farm</a></li>
-            <li><a href="crop">Crop</a></li>
-            <li><a href="cart">Cart</a></li>
-        </ul>
+      <ul>
+        <li id="name-login"></li>
+        <li><a href="farm">Farm</a></li>
+        <li><a href="crop">Crop</a></li>
+  
+      </ul>
     </nav>
-<div class="consists" >
-    <h1>Welcome to HarvestHub</h1>
-    <p><c>Empowering farmers with innovative tools and sustainable practices for efficient farm management.</c></p>
-    <a href="l" class="btn">Get Started</a>
-</div>"
-
-
-
-</body>
+    <div class="consists">
+      <h1>Welcome to HarvestHub</h1>
+      <p>
+        <c
+          >Empowering farmers with innovative tools and sustainable practices
+          for efficient farm management.</c
+        >
+      </p>
+    </div>
+  </body>
 </html>

@@ -63,109 +63,7 @@
    
       <div class="products-container" id="productsContainer">
    
-         <div class="product" data-name="p-1">
-            <img src="images/1.png" alt="">
-            <h3>strawberries</h3>
-            <div class="price">₹120.00</div>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-               <span>( 250 )</span>
-            </div>
-            <div class="buttons">
-               <h1><button onclick="addToCart('strawberries', 120.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
-            </div>
-         </div>
-   
-         <div class="product" data-name="p-2">
-            <img src="images/2.png" alt="">
-            <h3>onions</h3>
-            <div class="price">₹80.00</div>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-               <span>( 250 )</span>
-            </div>
-            <div class="buttons">
-              <h1> <button onclick="addToCart('onions', 80.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
-            </div>
-         </div>
-   
-         <!-- Add more product entries as needed -->
-         <div class="product" data-name="p-3">
-            <img src="images/3.png" alt="">
-            <h3>tomatoes</h3>
-            <div class="price">₹50.00</div>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-               <span>( 250 )</span>
-            </div>
-            <div class="buttons">
-               <h1><button onclick="addToCart('tomatoes', 50.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
-            </div>
-         </div>
-         
-         <div class="product" data-name="p-4">
-            <img src="images/4.png" alt="">
-            <h3>brinjal</h3>
-            <div class="price">₹40.00</div>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-               <span>( 250 )</span>
-            </div>
-            <div class="buttons">
-               <h1><button onclick="addToCart('brinjal', 40.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
-            </div>
-         </div>
-         
-         <div class="product" data-name="p-5">
-            <img src="images/5.png" alt="">
-            <h3>broccoli</h3>
-            <div class="price">₹90.00</div>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-               <span>( 250 )</span>
-            </div>
-            <div class="buttons">
-               <h1><button onclick="addToCart('broccoli', 90.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
-            </div>
-         </div>
-         
-         <div class="product" data-name="p-6">
-            <img src="images/6.png" alt="">
-            <h3>potatoes</h3>
-            <div class="price">₹70.00</div>
-            <div class="stars">
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star"></i>
-               <i class="fas fa-star-half-alt"></i>
-               <span>( 250 )</span>
-            </div>
-            <div class="buttons">
-               <h1><button onclick="addToCart('potatoes', 70.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
-            </div>
-         </div>
-         
+
          </div>
          
          </div>
@@ -185,14 +83,83 @@
 
 <body>
    <script>
+      updateCartDisplay();
+
+      const url_items = '/get-items';
+
+      const productsContainer = document.getElementById('productsContainer');
+
+      fetch(url_items)
+      .then(response => {
+         if (!response.ok) {
+            throw new Error('Network response was not ok');
+         }
+         return response.json();
+      })
+      .then(data => {
+         data.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.innerHTML = `
+            <div class="product" data-name="p-5">
+            <img src="images/5.png" alt="">
+            <h3>${item.item_name}</h3>
+            <div class="price">₹${item.price.toFixed(2)}</div>
+            <div class="stars">
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star-half-alt"></i>
+               <span>( 250 )</span>
+            </div>
+            <div class="buttons">
+               <h1><button onclick="addToCart('${item.item_name}', ${item.price.toFixed(2)}, ${item.id})"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
+            </div>
+         </div>
+            `;
+            // Append the item element to the products container
+            productsContainer.appendChild(itemElement);
+         });
+      })
+      .catch(error => {
+         console.error('There was a problem getting items:', error);
+      });
+
+
+
       let cart = [];
    
-      function addToCart(productName, productPrice) {
+      function addToCart(productName, productPrice,id) {
          const item = {
             name: productName,
             price: productPrice,
             quantity: 1,
+            id
          };
+
+         const url = '/add-cart-api'; 
+
+         const options = {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({ item })
+         };
+
+         fetch(url, options)
+         .then(response => {
+            if (!response.ok) {
+               throw new Error('Network response was not ok');
+            }
+            return response.json();
+         })
+         .then(data => {
+            console.log('Item sent successfully:', data);
+         })
+         .catch(error => {
+            console.error('There was a problem sending the item:', error);
+         });
    
          const existingItemIndex = cart.findIndex(i => i.name === productName);
    
@@ -206,28 +173,76 @@
       }
    
       function updateCartDisplay() {
-         const cartItemsElement = document.getElementById('cartItems');
+         var totalAmount = 0;
+         const url = '/get-cart-items';
          const totalAmountElement = document.getElementById('totalAmount');
-   
-         cartItemsElement.innerHTML = '';
-   
-         let totalAmount = 0;
-   
-         cart.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `
-               <span>${item.name} - ₹${item.price.toFixed(2)} x ${item.quantity}</span>
-               <button onclick="deleteItem('${item.name}')"><i class="fas fa-trash-alt"></i> Delete</button>
-            `;
-            cartItemsElement.appendChild(listItem);
-   
-            totalAmount += item.price * item.quantity;
-         });
-   
-         totalAmountElement.textContent = totalAmount.toFixed(2);
+
+// Container to render cart items
+const cartItemsContainer = document.getElementById('cartItems');
+
+// Make the fetch request
+fetch(url)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Iterate over each cart item in the data
+    cartItemsContainer.innerHTML = '';
+    data.forEach(cartItem => {
+      // Create a div element for each cart item
+      const cartItemElement = document.createElement('li');
+      // Set the inner HTML of the cart item element
+
+      cartItemElement.innerHTML = `
+        <span>${cartItem.item_name} - ₹${cartItem.price.toFixed(2)} x ${cartItem.quantity}</span>
+               <button onclick="deleteItem('${cartItem.item_name}',${cartItem.item_id})"><i class="fas fa-trash-alt"></i> Delete</button>
+
+      `;
+      // Append the cart item element to the cart items container
+      cartItemsContainer.appendChild(cartItemElement);
+      totalAmount+=cartItem.price*cartItem.quantity;
+    });
+
+    totalAmountElement.textContent = totalAmount.toFixed(2);
+  })
+  .catch(error => {
+    console.error('There was a problem getting cart items:', error);
+  });
+        
       }
    
-      function deleteItem(productName) {
+      function deleteItem(productName,item_id) {
+         const url = '/delete-cart-api';
+
+         const options = {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({ item_id })
+         };
+
+         // Make the fetch request
+         fetch(url, options)
+         .then(response => {
+            if (!response.ok) {
+               throw new Error('Network response was not ok');
+            }
+
+            return response.json();
+            
+         })
+         .then(data => {
+            updateCartDisplay();
+            console.log('Item deleted successfully:', data);
+         })
+         .catch(error => {
+            console.error('There was a problem deleting the item:', error);
+         });
+
          const index = cart.findIndex(i => i.name === productName);
          if (index !== -1) {
             cart.splice(index, 1);
@@ -236,11 +251,33 @@
       }
       function buyNow() {
          // Check if the cart is not empty before proceeding to checkout
-         if (cart.length === 0) {
-            alert('Your cart is empty. Add items before proceeding to checkout.');
+         fetch('/make-order-api', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({}) // Empty body
+         })
+         .then(response => {
+         // Handle the response
+         if (response.ok) {
+            alert("Items have been ordered, taking you to the orders page...");
+            window.location.href='/orders';
          } else {
-            
+            throw new Error('Error making the request');
          }
+         })
+         .then(data => {
+         // Handle the JSON data returned from the server
+         console.log(data);
+         })
+         .catch(error => {
+         // Handle any errors that occurred during the request
+         console.error('Error:', error);
+         });
+
+         
+       
       }
      
    </script>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Cart</title>
+    <link rel="stylesheet" href="order.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Your orders</h2>
+      <div id="order-list"></div>
+    </div>
+    <script>
+      function displayOrders() {
+        //var orders = [];
+        const url = "/orders-api-get-order-ids"; // Replace this with your actual API endpoint
+        const orderListContainer = document.getElementById("order-list");
+        orderListContainer.innerHTML = "";
+
+        // Make the fetch request
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((orders) => {
+            orders.forEach((x) => {
+              fetch("/orders-api-get-order/" + x)
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                  }
+                  return response.json();
+                })
+                .then((data) => {
+                  console.log(data);
+                  data.elements.forEach((item) => {
+                    var orderHTML = `
+                          <div class="order">
+                            <p><strong>Order ID:</strong> ${x}</p>
+                              <p><strong>Product Name:</strong> ${
+                                item.item_name
+                              }</p>
+                              <p><strong>Quantity:</strong> ${item.quantity}</p>
+                              <p><strong>Price:</strong> $${item.price}</p>
+                              <p><strong>Total:</strong> $${
+                                item.price * item.quantity
+                              }</p>
+                          </div>
+                          <hr>
+                      `;
+                    orderListContainer.innerHTML += orderHTML;
+                  });
+                })
+                .catch((error) => {
+                  console.error(
+                    "There was a problem fetching order data:",
+                    error
+                  );
+                });
+            });
+          })
+          .catch((error) => {
+            console.error("There was a problem fetching order IDs:", error);
+          });
+
+        console.log(orders);
+
+        const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+        if (orders.length === 0) {
+          orderListContainer.innerHTML = "<p>No orders in the cart.</p>";
+        } else {
+          // Clear previous content
+
+          orders.forEach(function (order, index) {});
+        }
+      }
+
+      // Function to clear the cart
+      function clearCart() {
+        localStorage.removeItem("orders");
+        displayOrders();
+      }
+
+      // Display orders when the page loads
+      window.addEventListener("load", displayOrders);
+    </script>
+  </body>
+</html>
