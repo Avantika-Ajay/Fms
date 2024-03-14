@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url('images/hehe.jpg');
+  background-size: cover;
+  background-position: center;
+    margin-top: 20px;
+    margin-bottom: auto;
+    align-self: flex-start; /* Aligns the header to the top */
+  }
+
+.container {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.39);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-width: 400px; /* Adjust the width as needed */
+  width: 80%; /* Adjust the width as needed */
+}
+
+h1 {
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"],
+button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+    </style>
+</head>
+<body>
+    <form class="Login" id="login" method="POST" action="login-api">
+        <nav>
+            <div class="container">
+                <h2 id="company">HarvestHub</h2>
+                <div>
+                    <input type="text" name="username" id="username" placeholder="Enter your username">
+                </div>
+                <div>
+                <input name="password" type="password" id="password"placeholder="Enter the password">
+                 </div>
+                 <div>
+                    <button id="loginBtn" type="submit" style="background-color: #4CAF50;">Login</button>
+                 </div>
+                
+                 <link rel="stylesheet"href="styles.css">
+                 <p class="invalid"></p>
+               
+            </div>
+        </nav>
+      </form>  
+      <div class="form-group">
+        <p>New User? </p> <button type="button" onclick="location.href='register'">Register Now</button>
+       
+      </div>
+</body>
+</html>

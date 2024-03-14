@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link rel="stylesheet" href="styles.css">
+
+   <!-- custom js file link  -->
+   <script src="script.js" defer></script>
+   <style>
+      .cart {
+         text-align: center;
+         max-width: 600px;
+         margin: 20px auto;
+         padding: 20px;
+         background-color: #fff;
+         border-radius: 8px;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #cartItems {
+         list-style: none;
+         padding: 0;
+         margin: 10px 0;
+      }
+
+      #cartItems li {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 10px;
+         border-bottom: 1px solid #eee;
+      }
+
+      #cartItems li button {
+         background-color: #ff6347;
+         color: #fff;
+         border: none;
+         padding: 8px 12px;
+         cursor: pointer;
+         border-radius: 4px;
+      }
+
+      #totalAmount {
+         font-size: 1.2em;
+         font-weight: bold;
+         color: #333;
+      }
+   </style>
+</head>
+
+<body>
+   
+   <div class="container">
+
+      <h3 class="title"> organic products </h3>
+   
+      <div class="products-container" id="productsContainer">
+   
+         <div class="product" data-name="p-1">
+            <img src="images/1.png" alt="">
+            <h3>strawberries</h3>
+            <div class="price">₹120.00</div>
+            <div class="stars">
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star-half-alt"></i>
+               <span>( 250 )</span>
+            </div>
+            <div class="buttons">
+               <h1><button onclick="addToCart('strawberries', 120.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
+            </div>
+         </div>
+   
+         <div class="product" data-name="p-2">
+            <img src="images/2.png" alt="">
+            <h3>onions</h3>
+            <div class="price">₹80.00</div>
+            <div class="stars">
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star-half-alt"></i>
+               <span>( 250 )</span>
+            </div>
+            <div class="buttons">
+              <h1> <button onclick="addToCart('onions', 80.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
+            </div>
+         </div>
+   
+         <!-- Add more product entries as needed -->
+         <div class="product" data-name="p-3">
+            <img src="images/3.png" alt="">
+            <h3>tomatoes</h3>
+            <div class="price">₹50.00</div>
+            <div class="stars">
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star-half-alt"></i>
+               <span>( 250 )</span>
+            </div>
+            <div class="buttons">
+               <h1><button onclick="addToCart('tomatoes', 50.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
+            </div>
+         </div>
+         
+         <div class="product" data-name="p-4">
+            <img src="images/4.png" alt="">
+            <h3>brinjal</h3>
+            <div class="price">₹40.00</div>
+            <div class="stars">
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star-half-alt"></i>
+               <span>( 250 )</span>
+            </div>
+            <div class="buttons">
+               <h1><button onclick="addToCart('brinjal', 40.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
+            </div>
+         </div>
+         
+         <div class="product" data-name="p-5">
+            <img src="images/5.png" alt="">
+            <h3>broccoli</h3>
+            <div class="price">₹90.00</div>
+            <div class="stars">
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star-half-alt"></i>
+               <span>( 250 )</span>
+            </div>
+            <div class="buttons">
+               <h1><button onclick="addToCart('broccoli', 90.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
+            </div>
+         </div>
+         
+         <div class="product" data-name="p-6">
+            <img src="images/6.png" alt="">
+            <h3>potatoes</h3>
+            <div class="price">₹70.00</div>
+            <div class="stars">
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star-half-alt"></i>
+               <span>( 250 )</span>
+            </div>
+            <div class="buttons">
+               <h1><button onclick="addToCart('potatoes', 70.00)"><i class="fas fa-cart-plus"></i> Add to Cart</button></h1>
+            </div>
+         </div>
+         
+         </div>
+         
+         </div>
+      </div>
+
+   <div class="cart" id="cartContainer">
+      <h1>Shopping Cart</h1>
+      <ul id="cartItems">
+         <!-- Cart items will be displayed here -->
+      </ul>
+     <h1> <p>Total: ₹<span id="totalAmount">0.00</span></p></h1>
+     <button id="buyNowBtn" onclick="buyNow()" class="btn"><h2>Buy Now</h2></button>
+   </div>
+</div>
+
+</head>
+
+<body>
+   <script>
+      let cart = [];
+   
+      function addToCart(productName, productPrice) {
+         const item = {
+            name: productName,
+            price: productPrice,
+            quantity: 1,
+         };
+   
+         const existingItemIndex = cart.findIndex(i => i.name === productName);
+   
+         if (existingItemIndex !== -1) {
+            cart[existingItemIndex].quantity += 1;
+         } else {
+            cart.push(item);
+         }
+         console.log(cart)
+         updateCartDisplay();
+      }
+   
+      function updateCartDisplay() {
+         const cartItemsElement = document.getElementById('cartItems');
+         const totalAmountElement = document.getElementById('totalAmount');
+   
+         cartItemsElement.innerHTML = '';
+   
+         let totalAmount = 0;
+   
+         cart.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+               <span>${item.name} - ₹${item.price.toFixed(2)} x ${item.quantity}</span>
+               <button onclick="deleteItem('${item.name}')"><i class="fas fa-trash-alt"></i> Delete</button>
+            `;
+            cartItemsElement.appendChild(listItem);
+   
+            totalAmount += item.price * item.quantity;
+         });
+   
+         totalAmountElement.textContent = totalAmount.toFixed(2);
+      }
+   
+      function deleteItem(productName) {
+         const index = cart.findIndex(i => i.name === productName);
+         if (index !== -1) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+         }
+      }
+      function buyNow() {
+         // Check if the cart is not empty before proceeding to checkout
+         if (cart.length === 0) {
+            alert('Your cart is empty. Add items before proceeding to checkout.');
+         } else {
+            
+         }
+      }
+     
+   </script>
+</body>
+</html>

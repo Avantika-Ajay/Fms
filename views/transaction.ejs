@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="transaction.css"> <!-- Link to your custom stylesheet -->
+   <title>Transaction Page</title>
+   <style>
+      body {
+         font-family: 'Arial', sans-serif;
+         margin: 0;
+         padding: 0;
+         background-color: #f8f8f8;
+         text-align: center;
+      }
+
+      .container {
+         max-width: 600px;
+         margin: 50px auto;
+         padding: 30px;
+         background-color: #3abf6f;
+         border-radius: 10px;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .title {
+         color: #000000;
+         font-size: 32px;
+         margin-bottom: 20px;
+      }
+
+      form {
+         display: grid;
+         gap: 15px;
+         text-align: left;
+      }
+
+      label {
+         font-weight: bold;
+         color: #333;
+      }
+
+      input, select {
+         width: 100%;
+         padding: 10px;
+         box-sizing: border-box;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         font-size: 16px;
+      }
+
+      button {
+         background-color: #000000;
+         color: #fff;
+         padding: 12px 20px;
+         font-size: 18px;
+         cursor: pointer;
+         border: none;
+         border-radius: 5px;
+      }
+
+      button:hover {
+         background-color: #000000;
+      }
+   </style>
+</head>
+<body>
+
+   <div class="container">
+      <h3 class="title">Secure Payment</h3>
+      <form id="transactionForm" onsubmit="processTransaction(event)">
+         <label for="name">Cardholder Name:</label>
+         <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+         <label for="cardNumber">Card Number:</label>
+         <input type="text" id="cardNumber" name="cardNumber" placeholder="Enter card number" required>
+
+         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div>
+               <label for="expiryDate">Expiry Date:</label>
+               <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+            </div>
+            <div>
+               <label for="cvv">CVV:</label>
+               <input type="text" id="cvv" name="cvv" placeholder="Enter CVV" required>
+            </div>
+         </div>
+
+         <label for="country">Country:</label>
+         <select id="country" name="country" required>
+            <option value="" disabled selected>Select your State</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+         </select>
+
+         <button type="submit">Complete Purchase</button>
+      </form>
+   </div>
+
+   <script>
+      function processTransaction(event) {
+         event.preventDefault();
+
+         // Implement your transaction processing logic here
+         // For this example, show an alert indicating success
+         alert('Payment successful! Thank you for your purchase.');
+      }
+   </script>
+
+</body>
+</html>
