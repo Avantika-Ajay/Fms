@@ -231,7 +231,7 @@ app.get("/orders-api-get-order/:id", auth, (req, res) => {
 
 app.get("/get-items", auth, (req, res) => {
   con.query(
-    "select id,item_name,price from items;",
+    "select id,item_name,price,image from items;",
     async function (err, result, fields) {
       if (err) throw err;
       console.log("Items", result);

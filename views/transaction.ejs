@@ -95,7 +95,7 @@
             <option value="Tamil Nadu">Tamil Nadu</option>
          </select>
 
-         <button type="submit">Complete Purchase</button>
+         <button type="submit">Pay Now</button>
       </form>
    </div>
 
@@ -103,9 +103,39 @@
       function processTransaction(event) {
          event.preventDefault();
 
+
+          fetch('/make-order-api', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({}) // Empty body
+         })
+         .then(response => {
+         // Handle the response
+         if (response.ok) {
+            alert("Payment successful! Thank you for your purchase.");
+            window.location.href='/orders';
+         } else {
+            throw new Error('Error making the request');
+         }
+         })
+         .then(data => {
+         // Handle the JSON data returned from the server
+         console.log(data);
+         })
+         .catch(error => {
+         // Handle any errors that occurred during the request
+         console.error('Error:', error);
+         });
+
+         
+
          // Implement your transaction processing logic here
          // For this example, show an alert indicating success
-         alert('Payment successful! Thank you for your purchase.');
+         // alert('Payment successful! Thank you for your purchase.');
+
+
       }
    </script>
 
